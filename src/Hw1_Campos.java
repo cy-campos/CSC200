@@ -17,7 +17,6 @@
             "How many square feet do they need to paint?"                           -> Input "987654"
             "It will take them {hours} hours."
  */
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +28,11 @@ public class Hw1_Campos {
     public static void main(String[] args) {
 
         // "Give me 2 names"
-        var data1 = new PainterData();
+        PainterData data1 = new PainterData();
         data1.name = getUserInputAsString("Give me name 1:");
         data1.time.set_minutes(45);
 
-        var data2 = new PainterData();
+        PainterData data2 = new PainterData();
         data2.name = getUserInputAsString("Give me name 2:");
         data2.set_squareYards(2000);
 
@@ -50,14 +49,14 @@ public class Hw1_Campos {
                 data2.getFirstName(),
                 data2.get_squareYards())));
 
-        var squareFeetToPaint = getUserInputAsLong("How many square feet do they need to paint?");
+        long squareFeetToPaint = getUserInputAsLong("How many square feet do they need to paint?");
 
         // package up the data - "List" is an "interface"; ArrayList inherits "List"
         List<PainterData> dataList = new ArrayList<>();
         dataList.add(data1);
         dataList.add(data2);
 
-        var result =  PainterData.getTimeToCompleteJob(squareFeetToPaint, dataList);
+        MyTime result =  PainterData.getTimeToCompleteJob(squareFeetToPaint, dataList);
 
         _print(String.format("It will take them %f hours", result.get_hours()));
         _print(result.toString());
@@ -85,7 +84,7 @@ public class Hw1_Campos {
     private static String getUserInputAsString(String question) {
         try {
             _print(question);
-            var _out = _scanner.nextLine();
+            String _out = _scanner.nextLine();
             return _out;
         } catch (Exception exception) {
             System.out.println(String.format("Error: Input Invalid | Please re-enter value\nMessage: %s\n", exception.toString()));
@@ -99,7 +98,7 @@ public class Hw1_Campos {
     private static double getUserInputAsDouble(String question) {
         try {
             _print(question);
-            var _out = _scanner.nextDouble();
+            double _out = _scanner.nextDouble();
             return _out;
         } catch (Exception exception) {
             System.out.println(String.format("Error: Input Invalid | Please re-enter value\nMessage: %s\n", exception.toString()));
@@ -149,7 +148,7 @@ class PainterData {
     }
 
     public String toString() {
-        var message = String.format("Name: %s\nTime (DD:HH:MM:SS): %s\nSquare Yards: %d",
+        String message = String.format("Name: %s\nTime (DD:HH:MM:SS): %s\nSquare Yards: %d",
                 name,
                 time != null ? time.toString() : "N/A",
                 _squareYards);
@@ -157,17 +156,17 @@ class PainterData {
     }
 
     public String getFirstName() {
-        var stringSplit = name.split(" ");
+        String[] stringSplit = name.split(" ");
         return ((stringSplit != null) && (stringSplit.length > 0)) ? stringSplit[0] : null;
     }
 
     public String getLastName() {
-        var stringSplit = name.split(" ");
+        String[] stringSplit = name.split(" ");
         return ((stringSplit != null) && (stringSplit.length > 1)) ? stringSplit[1] : null;
     }
 
     public double getSquareFeetPerMinute() {
-        var minutes = time != null ? time.get_minutes() : -1;
+        double minutes = time != null ? time.get_minutes() : -1;
         return ((minutes != 0) || (minutes != -1)) ? (_squareFeet / minutes) : -1;
     }
 
@@ -177,8 +176,8 @@ class PainterData {
 
         double totalRate = 0;
 
-        for(var i = 0; i < dataList.size(); i++) {
-            var data = dataList.get(i);
+        for(int i = 0; i < dataList.size(); i++) {
+            PainterData data = dataList.get(i);
 
             // given 2 painters, calculate hours it will take for both painters to paint a room of X square feet
             // - lowest common denominator of time is minutes; target output is hours
@@ -187,10 +186,10 @@ class PainterData {
             totalRate += data.getSquareFeetPerMinute();
         }
 
-        var _out = new MyTime();
+        MyTime _out = new MyTime();
 
         // for more precision, use seconds
-        var totalSeconds = (((double)squareFeetToPaint) / totalRate) * 60;
+        double totalSeconds = (((double)squareFeetToPaint) / totalRate) * 60;
         _out.set_seconds(Math.round(totalSeconds));
 
         return _out;
@@ -245,7 +244,7 @@ class MyTime {
     }
 
     private void _calculate() {
-        var totalSeconds = (double)_totalSeconds;
+        double totalSeconds = (double)_totalSeconds;
         _days = totalSeconds / (24*60*60);
         _hours = _days*24;
         _minutes = _hours*60;
@@ -254,10 +253,10 @@ class MyTime {
 
     public String toString() {
         // for accuracy, start with seconds and work way up to hours
-        var _seconds = (long) this._totalSeconds % 60;
-        var _minutes = (long) (this._totalSeconds / 60) % 60;
-        var _hours = (long) (this._totalSeconds / (60 * 60)) % 24;
-        var _days = (long) Math.floor(this._totalSeconds / (60*60*24));
+        long _seconds = (long) this._totalSeconds % 60;
+        long _minutes = (long) (this._totalSeconds / 60) % 60;
+        long _hours = (long) (this._totalSeconds / (60 * 60)) % 24;
+        long _days = (long) Math.floor(this._totalSeconds / (60*60*24));
 
 
         // format the numbers as string output (add a "0" if less than 10)
@@ -266,8 +265,7 @@ class MyTime {
         String minutes = _minutes < 10 ? "0" + _minutes : _minutes + "";
         String seconds = _seconds < 10 ? "0" + _seconds : _seconds + "";
 
-        var _out = String.format("%s:%s:%s:%s", days, hours, minutes, seconds);
+        String _out = String.format("%s:%s:%s:%s", days, hours, minutes, seconds);
         return _out;
     }
 }
-
