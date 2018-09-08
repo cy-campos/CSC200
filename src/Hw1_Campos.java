@@ -21,53 +21,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hw1_Campos {
+    public static void main(String[] args) {
+        try (MyScanner scanner = new MyScanner()) {
+            // "Give me 2 names"
+            PainterData data1 = new PainterData();
+            data1.name = scanner.getUserInputAsString("Give me name 1:");
+            data1.time.set_minutes(45);
+
+            PainterData data2 = new PainterData();
+            data2.name = scanner.getUserInputAsString("Give me name 2:");
+            data2.set_squareYards(2000);
+
+            // "Two painters are {name1_firstName} and {name2_firstName}"
+            scanner._print(String.format("The two painters are %s and %s.", data1.getFirstName(), data2.getFirstName()));
+
+            // "How many square yards can {name1} paint in 45 minutes?"
+            data1.set_squareYards(scanner.getUserInputAsDouble(String.format("How may square yards can %s paint in %f minutes?",
+                    data1.getFirstName(),
+                    data1.time.get_minutes())));
+
+            // "How many hours does it take for Jane to paint 2000 square yards?"
+            data2.time.set_hours(scanner.getUserInputAsDouble(String.format("How many hours does it take for %s to paint in %f square yards?",
+                    data2.getFirstName(),
+                    data2.get_squareYards())));
+
+            long squareFeetToPaint = scanner.getUserInputAsLong("How many square feet do they need to paint?");
+
+            // package up the data - "List" is an "interface"; ArrayList inherits "List"
+            List<PainterData> dataList = new ArrayList<>();
+            dataList.add(data1);
+            dataList.add(data2);
+
+            MyTime result = PainterData.getTimeToCompleteJob(squareFeetToPaint, dataList);
+
+            scanner._print(String.format("It will take them %f hours", result.get_hours()));
+            scanner._print(result.toString());
+        }
+    }
+}
+
+class MyScanner implements AutoCloseable {
+    public MyScanner() {
+        _scanner = new java.util.Scanner(System.in);
+    }
 
     // Private field "_scanner" handles text input via System.in
-    private static java.util.Scanner _scanner = new java.util.Scanner(System.in);
-
-    public static void main(String[] args) {
-
-        // "Give me 2 names"
-        PainterData data1 = new PainterData();
-        data1.name = getUserInputAsString("Give me name 1:");
-        data1.time.set_minutes(45);
-
-        PainterData data2 = new PainterData();
-        data2.name = getUserInputAsString("Give me name 2:");
-        data2.set_squareYards(2000);
-
-        // "Two painters are {name1_firstName} and {name2_firstName}"
-        _print(String.format("The two painters are %s and %s.", data1.getFirstName(), data2.getFirstName()));
-
-        // "How many square yards can {name1} paint in 45 minutes?"
-        data1.set_squareYards(getUserInputAsDouble(String.format("How may square yards can %s paint in %f minutes?",
-                data1.getFirstName(),
-                data1.time.get_minutes())));
-
-        // "How many hours does it take for Jane to paint 2000 square yards?"
-        data2.time.set_hours(getUserInputAsDouble(String.format("How many hours does it take for %s to paint in %f square yards?",
-                data2.getFirstName(),
-                data2.get_squareYards())));
-
-        long squareFeetToPaint = getUserInputAsLong("How many square feet do they need to paint?");
-
-        // package up the data - "List" is an "interface"; ArrayList inherits "List"
-        List<PainterData> dataList = new ArrayList<>();
-        dataList.add(data1);
-        dataList.add(data2);
-
-        MyTime result =  PainterData.getTimeToCompleteJob(squareFeetToPaint, dataList);
-
-        _print(String.format("It will take them %f hours", result.get_hours()));
-        _print(result.toString());
-    }
-
-    private static MyTime _calculateHours(long squareFeetToPaint, PainterData data1, PainterData data2) {
-        return new MyTime();
-    }
+    private java.util.Scanner _scanner;
 
     // will solve for now by using different method names - but should really use generics
-    private static long getUserInputAsLong(String question) {
+    public long getUserInputAsLong(String question) {
         try {
             _print(question);
             return _scanner.nextLong();
@@ -81,7 +83,7 @@ public class Hw1_Campos {
     }
 
     // if we ever require the user to input a Data.name, this will come in handy
-    private static String getUserInputAsString(String question) {
+    public String getUserInputAsString(String question) {
         try {
             _print(question);
             String _out = _scanner.nextLine();
@@ -95,7 +97,7 @@ public class Hw1_Campos {
         }
     }
 
-    private static double getUserInputAsDouble(String question) {
+    public double getUserInputAsDouble(String question) {
         try {
             _print(question);
             double _out = _scanner.nextDouble();
@@ -118,8 +120,12 @@ public class Hw1_Campos {
     */
 
     // lazy shortcut for System.out.println
-    private static void _print(Object obj) {
+    public void _print(Object obj) {
         System.out.println(obj);
+    }
+
+    public void close() {
+        _scanner = null;
     }
 }
 
