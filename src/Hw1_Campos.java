@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hw1_Campos {
-
     // Private field "_scanner" handles text input via System.in
     private static java.util.Scanner _scanner = new java.util.Scanner(System.in);
 

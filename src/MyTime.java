@@ -2,7 +2,6 @@
 // time conversion library in the Java framework; Although, I'm sure it exists somewhere.
 // No logic to handle "double" overflows has been implemented - so beware (ex: put in a number outside of the acceptable range of double)
 public class MyTime {
-
     public MyTime() {
         _days = 0;
         _hours = 0;
