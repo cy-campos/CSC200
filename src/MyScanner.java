@@ -82,11 +82,9 @@ public class MyScanner implements AutoCloseable {
 
         var strType = object.getClass().getName();
 
-        print(strType);
-
         // can't use a "switch" here because even though InputTypes are static and final, their values
         // are not known until compile time. To solve, we could manually initialize them as strings, but
-        // from my understandings of "best practices", changes to the underlying primitive class methods such as "getName()"
+        // from my understanding of "best practices", changes to the underlying primitive class methods such as "getName()"
         // could potentially break code (although not likely to ever happen).
 
         // For complete safety, we can just use if/else conditionals.. though it is ugly. Will eventually check out enums and
@@ -128,6 +126,10 @@ public class MyScanner implements AutoCloseable {
         try  {
             var test = this.getUserInput(String.format("Enter a %s:", wrapped_int.getClass().getName()), wrapped_int);
             this.print(test);
+
+            var test2 = this.getUserInput("Enter a double:", Double.valueOf(123.456));
+            this.print(test2);
+
         } catch (Exception ex){
 
         }
