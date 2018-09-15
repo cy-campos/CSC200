@@ -1,3 +1,35 @@
+/*
+    Title:          HomeworkAssignment2
+    Scope:          CSC 200 (002M) - Yun-Sheng Wang, Ph.D
+    Author:         Christopher Yap Campos
+    Contact:        cy.campos1983@gmail.com
+    Created:        25SEP2018
+    Dependencies:   Requires java 10 in order to use inference type "var"
+    Summary:        HW2
+
+    Requirements Updated 01SEP2018
+        - UI will show:
+            Convert a number from base A to base B.
+
+            What is A:
+
+            > 7
+
+            What is B:
+
+            > 5
+
+            Give me a base-7 number:
+
+            > 45.56
+
+            (If it is not a base-7 #, start all over.)
+
+            The number in b-10 is: XYZ
+
+            The number in b-5 is: 1234.43.
+ */
+
 import java.util.regex.Pattern;
 
 public class Hw2_Campos {
@@ -7,12 +39,12 @@ public class Hw2_Campos {
 
         try (var scanner = new Hw2_scanner()) {
 //            scanner.runLazyUnitTest();
-            baseValue = scanner.getUserInputAsBaseValue();
-            baseToConvert = scanner.getUserInput("What is the new base?", baseToConvert);
-
-            scanner.print(String.format("Converting: %s(Base %d) -> x(Base %d)", baseValue.get_value(), baseValue.get_base(), baseToConvert));
-            var x = BaseValue.convertToBase(baseValue, baseToConvert);
-            scanner.print(String.format("x: %s(Base %d)", x.get_value(), baseToConvert));
+//            baseValue = scanner.getUserInputAsBaseValue();
+//            baseToConvert = scanner.getUserInput("What is the new base?", baseToConvert);
+//
+//            scanner.print(String.format("Converting: %s(Base %d) -> x(Base %d)", baseValue.get_value(), baseValue.get_base(), baseToConvert));
+//            var x = BaseValue.convertToBase(baseValue, baseToConvert);
+//            scanner.print(String.format("x: %s(Base %d)", x.get_value(), baseToConvert));
 
 //            var input = scanner.getUserInputAsString("Give me a base 3 number");
 //            var split = input.split("\\.");
@@ -24,6 +56,9 @@ public class Hw2_Campos {
 //            baseValue2.set_value(left);
 
 //            scanner.print(String.format("answer: %s", BaseValue.convertToBase(baseValue2, 2).get_value()));
+
+            scanner.print("Convert a number from base A to base B.");
+
 
 
         } catch (Exception ex) {
