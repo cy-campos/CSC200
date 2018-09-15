@@ -109,7 +109,7 @@ public class Hw1_Campos {
     /*
     private static <T> T getUserInput(String question, Class<T> object) {
         var strType = object.getName();
-        _print(strType);
+        print(strType);
     }
     */
 
