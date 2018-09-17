@@ -34,32 +34,59 @@ import java.util.regex.Pattern;
 
 public class Hw2_Campos {
     public static void main(String[] args) {
+        try (var scanner = new Hw2_scanner()) {
+            var base7Number = "";
+            var a = Integer.valueOf(0);
+            var b = Integer.valueOf(0);
+
+            do {
+                scanner.print("Convert a number from base A to base B.");
+                a = scanner.getUserInput("What is A:", a);
+                b = scanner.getUserInput("What is B:", b);
+
+                base7Number = scanner.getUserInput(String.format("Give me a base-%d number", a), base7Number);
+
+                if (!isBaseNumberValid(a, base7Number))
+                    scanner.print("You did not enter a base-7 number. Starting over.");
+
+            } while (!isBaseNumberValid(a, base7Number));
+
+            var baseA = new BaseValue(a, base7Number);
+
+            scanner.print(String.format("The number in b-10 is: %s", BaseValue.toBase10(baseA).get_value()));
+            scanner.print(String.format("The number in b-%d is: %s", b, BaseValue.convertToBase(baseA, b).get_value()));
+
+        } catch (Exception ex) {
+            System.out.println(String.format("Error: Unhandled Exception\nMessage: %s\n", ex.toString()));
+        }
+    }
+
+    private static boolean isBaseNumberValid(Integer base, String number) {
+        if ((base < 2) || (base > 16))
+            return false;
+        else if (base < 11) {
+            var regex = String.format("^[0-%d\\.]+$", base - 1);
+            return Pattern.matches(regex, number);
+        } else if (base == 11)
+            return Pattern.matches("^[a0-9\\.]+$", number);
+        else
+            return Pattern.matches(String.format("^[a-%s0-9\\.]+$", BaseValue.LetterValues.getValue(base.doubleValue())), number);
+    }
+
+    public static void testFullImplementation() {
         var baseValue = new BaseValue();
         var baseToConvert = Integer.valueOf(0);
 
         try (var scanner = new Hw2_scanner()) {
-//            scanner.runLazyUnitTest();
+            //            scanner.runLazyUnitTest();
+
+            //use this code for testing
             baseValue = scanner.getUserInputAsBaseValue();
             baseToConvert = scanner.getUserInput("What is the new base?", baseToConvert);
 
             scanner.print(String.format("Converting: %s(Base %d) -> x(Base %d)", baseValue.get_value(), baseValue.get_base(), baseToConvert));
             var x = BaseValue.convertToBase(baseValue, baseToConvert);
             scanner.print(String.format("x: %s(Base %d)", x.get_value(), baseToConvert));
-
-//            var input = scanner.getUserInputAsString("Give me a base 3 number");
-//            var split = input.split("\\.");
-//            var left = split[0];
-//            var right = split[1];
-//
-//            var baseValue2 = new BaseValue();
-//            baseValue2.set_base(3);
-//            baseValue2.set_value(left);
-
-//            scanner.print(String.format("answer: %s", BaseValue.convertToBase(baseValue2, 2).get_value()));
-
-//            scanner.print("Convert a number from base A to base B.");
-
-
         } catch (Exception ex) {
             System.out.println(String.format("Error: Unhandled Exception\nMessage: %s\n", ex.toString()));
         }
