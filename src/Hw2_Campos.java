@@ -257,7 +257,7 @@ class BaseValue {
 
             return strLeftSolved + "." + strRightSolved;
         } else {
-            return _convertToBase10Left(base10Value, newBase);
+            return _convertBase10ToBaseLeft(base10Value, newBase);
         }
     }
 
