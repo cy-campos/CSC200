@@ -39,12 +39,12 @@ public class Hw2_Campos {
 
         try (var scanner = new Hw2_scanner()) {
 //            scanner.runLazyUnitTest();
-//            baseValue = scanner.getUserInputAsBaseValue();
-//            baseToConvert = scanner.getUserInput("What is the new base?", baseToConvert);
-//
-//            scanner.print(String.format("Converting: %s(Base %d) -> x(Base %d)", baseValue.get_value(), baseValue.get_base(), baseToConvert));
-//            var x = BaseValue.convertToBase(baseValue, baseToConvert);
-//            scanner.print(String.format("x: %s(Base %d)", x.get_value(), baseToConvert));
+            baseValue = scanner.getUserInputAsBaseValue();
+            baseToConvert = scanner.getUserInput("What is the new base?", baseToConvert);
+
+            scanner.print(String.format("Converting: %s(Base %d) -> x(Base %d)", baseValue.get_value(), baseValue.get_base(), baseToConvert));
+            var x = BaseValue.convertToBase(baseValue, baseToConvert);
+            scanner.print(String.format("x: %s(Base %d)", x.get_value(), baseToConvert));
 
 //            var input = scanner.getUserInputAsString("Give me a base 3 number");
 //            var split = input.split("\\.");
@@ -57,8 +57,7 @@ public class Hw2_Campos {
 
 //            scanner.print(String.format("answer: %s", BaseValue.convertToBase(baseValue2, 2).get_value()));
 
-            scanner.print("Convert a number from base A to base B.");
-
+//            scanner.print("Convert a number from base A to base B.");
 
 
         } catch (Exception ex) {
@@ -144,21 +143,38 @@ class BaseValue {
                 throw new IllegalArgumentException("Too many characters.");
 
             switch (strNumber.toLowerCase()) {
-                case "a": return A;
-                case "b": return B;
-                case "c": return C;
-                case "d": return D;
-                case "e": return E;
-                case "f": return F;
+                case "a":
+                    return A;
+                case "b":
+                    return B;
+                case "c":
+                    return C;
+                case "d":
+                    return D;
+                case "e":
+                    return E;
+                case "f":
+                    return F;
                 default:
                     throw new IllegalArgumentException("Value out of range.");
             }
         }
 
         public static String getValue(double number) throws IllegalArgumentException {
-            var asInt = (int)number;
+            var asInt = (int) number;
 
             switch (asInt) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                    return asInt + "";
                 case 10:
                     return "a";
                 case 11:
@@ -169,6 +185,8 @@ class BaseValue {
                     return "d";
                 case 14:
                     return "e";
+                case 15:
+                    return "f";
                 default:
                     throw new IllegalArgumentException();
             }
@@ -180,9 +198,6 @@ class BaseValue {
     }
 
     public static BaseValue convertToBase(BaseValue value, Integer base) throws UnsupportedOperationException {
-        if (_containsDecimal(value.get_value()))
-                throw new UnsupportedOperationException();
-
         if (value.get_base() == base)
             return value;
 
@@ -190,50 +205,118 @@ class BaseValue {
             var _out = new BaseValue();
 
             // convert to base 10
-            var base10 = BaseValue.convertToBase10(value);
-            var base10ValueAsDouble = Double.parseDouble(base10.get_value());
-            var remainder = 0;
-            var roundedValue = (int)Math.floor(base10ValueAsDouble);
+            var base10 = value.get_base() == 10 ? value : BaseValue.toBase10(value);
 
-            java.util.List<String> stringList = new java.util.ArrayList<>();
-
-            do {
-                remainder = roundedValue % base;
-                stringList.add(remainder > 9 ? LetterValues.getValue(remainder) : remainder + "");
-                roundedValue = (int)Math.floor(roundedValue/base);
-
-                if (roundedValue == 0)
-                    stringList.add("0");
-
-            } while (roundedValue != 0);
-
-            var _outvalue = "";
-            // stringlist is backwards, so we have append it to the value backwards
-            for (var x = stringList.size() - 1; x >= 0; x--) {
-                _outvalue += stringList.get(x);
-            }
-
-            _out.set_value(_outvalue);
+            _out.set_value(_convertBase10StringToNewBase(base10.get_value(), base));
             _out.set_base(base);
 
             return _out;
 
         } else {
-            return BaseValue.convertToBase10(value);
+            return BaseValue.toBase10(value);
         }
     }
 
-    public static BaseValue convertToBase10(BaseValue value) {
-        if (_containsDecimal(value.get_value()))
-            throw new UnsupportedOperationException();
+    private static String _convertBase10StringToNewBase(String base10Value, int newBase) {
 
-        var _out = new BaseValue();
+        if (_containsDecimal(base10Value)) {
+            var strSplit = base10Value.split("\\.");
+            var strLeft = strSplit[0];
+            var strRight = strSplit[1];
 
+            var strLeftSolved = _convertBase10ToBaseLeft(strLeft, newBase);
+
+            var strRightSolved = _convertBase10ToBaseRight(strRight, newBase);
+
+            return strLeftSolved + "." + strRightSolved;
+        } else {
+            return _convertToBase10Left(base10Value, newBase);
+        }
+    }
+
+    private static String _convertBase10ToBaseLeft(String strLeft, int newBase) {
+        var base10ValueAsDouble = Double.parseDouble(strLeft);
+        var remainder = 0;
+        var roundedValue = (int) Math.floor(base10ValueAsDouble);
+
+        java.util.List<String> stringList = new java.util.ArrayList<>();
+
+        do {
+            remainder = roundedValue % newBase;
+            stringList.add(remainder > 9 ? LetterValues.getValue(remainder) : remainder + "");
+            roundedValue = (int) Math.floor(roundedValue / newBase);
+
+        } while (roundedValue != 0);
+
+        var _outvalue = "";
+        // stringlist is backwards, so we have append it to the value backwards
+        for (var x = stringList.size() - 1; x >= 0; x--) {
+            _outvalue += stringList.get(x);
+        }
+
+        return _outvalue;
+    }
+
+    private static String _convertBase10ToBaseRight(String strRight, int newBase) {
+        var value = Double.valueOf("." + strRight);
+        var base = Double.valueOf(newBase + "");
+        var total = Double.valueOf(0);
+        var _out = "";
+
+        // we'll set precision to the amount of sigfigs in strRight
+        var tries = strRight.length();
+
+        do {
+            var strValue = (value * base) + "";
+            var strSplit = strValue.split("\\.");
+            var _strLeft = strSplit[0];
+            var _strRight = strSplit[1];
+            _out += LetterValues.getValue(Double.valueOf(_strLeft).doubleValue());
+            value = Double.parseDouble("." + _strRight);
+
+            tries--;
+        } while ((tries > 0) && (value != 0.0));
+
+        return _out;
+    }
+
+    // Returns the (Base 10) Value of the given baseValue
+    public static BaseValue toBase10(BaseValue baseValue) {
+        var base = baseValue.get_base();
+        var value = baseValue.get_value();
+
+        if (base == 10)
+            return baseValue;
+
+        if (_containsDecimal(value)) {
+            var strSplit = value.split("\\.");
+            var strLeft = strSplit[0];
+            var strRight = strSplit[1];
+
+            // solve for the left side of the decimal
+            var strLeftSolved = _convertToBase10Left(strLeft, base);
+
+            // solve for the right side of the decimal
+            var strRightSolved = _convertToBase10Right(strRight, base);
+
+            // concatenate the values and return BaseValue
+            return new BaseValue(10, strLeftSolved + "." + strRightSolved);
+        } else {
+
+            var _out = new BaseValue();
+
+            _out.set_value(_convertToBase10Left(baseValue.get_value(), baseValue.get_base()));
+            _out.set_base(10);
+
+            return _out;
+        }
+    }
+
+    private static String _convertToBase10Left(String leftValue, int base) {
         var total = Double.valueOf(0);
         var increment = Double.valueOf(0);
-
-        var _value = value.get_value();
-        var _base = value.get_base();
+        var _value = leftValue;
+        var _base = base;
 
         // convert base 10 to given base param
         for (var x = _value.length() - 1; x >= 0; x--) {
@@ -252,9 +335,33 @@ class BaseValue {
             increment++;
         }
 
-        _out.set_value(Double.toString(total));
-        _out.set_base(10);
+        var integer = total.intValue();
+        return integer + "";
+    }
 
-        return _out;
+    private static String _convertToBase10Right(String rightValue, int base) {
+        var increment = Double.valueOf(1);
+        var _base = Double.valueOf(base + "");
+        var total = Double.valueOf(0);
+
+        // convert base 10 to given base param
+        for (var x = 0; x < rightValue.length(); x++) {
+            var character = String.valueOf(rightValue.charAt(x));
+
+            // determine if character is a number
+            if (Pattern.matches("[0-9]", character)) {
+                var number = Double.parseDouble(character);
+//                total += number * Math.pow(_base, -increment);
+                var pow = Math.pow(_base, (-1 * increment));
+                total += number * pow;
+            } else if (Pattern.matches("[a-f]", character)) {  // determine if char is a letter
+                var number = LetterValues.getValue(character);
+                total += number * Math.pow(_base, -increment);
+            }
+
+            increment++;
+        }
+
+        return (total + "").replace("0.", "");
     }
 }
