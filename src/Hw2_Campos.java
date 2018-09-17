@@ -70,7 +70,7 @@ public class Hw2_Campos {
         } else if (base == 11)
             return Pattern.matches("^[a0-9\\.]+$", number);
         else
-            return Pattern.matches(String.format("^[a-%s0-9\\.]+$", BaseValue.LetterValues.getValue(base.doubleValue())), number);
+            return Pattern.matches(String.format("^[a-%s0-9\\.]+$", BaseValue.LetterValues.getValue(base.doubleValue() - 1)), number);
     }
 
     public static void testFullImplementation() {
