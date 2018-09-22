@@ -7,8 +7,16 @@
     Dependencies:   Requires java 10 in order to use inference type "var"
     Summary:        HW2
 
-    Requirements Updated 01SEP2018
-        - UI will show:
+    Requirements Updated 22SEP2018
+        You must use:
+            1) at least one switch statements (p.176),
+            2) the ASCII concept,
+            3) if-else if-else statements, and
+            4) an exit() method (p. 168).
+
+        Possible bases: 5, 6, and 7.
+
+        - UI Will show:
             Convert a number from base A to base B.
 
             What is A:
@@ -131,7 +139,7 @@ class BaseValue {
     }
 
     public void set_base(int base) throws IllegalArgumentException {
-        if (base < 1)
+        if (base < 2)
             throw new IllegalArgumentException("Base cannot be less than 1");
         else if (base > 16)
             throw new IllegalArgumentException("Base cannot be greater than 16");
