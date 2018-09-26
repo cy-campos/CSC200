@@ -47,21 +47,30 @@ public class Hw2_Campos {
             var a = Integer.valueOf(0);
             var b = Integer.valueOf(0);
 
-            do {
-                scanner.print("Convert a number from base A to base B.");
-                a = scanner.getUserInput("What is A:", a);
-                b = scanner.getUserInput("What is B:", b);
+            // Convert a number from base A to base B.
+            scanner.print("Convert a number from base A to base B.");
 
-                base7Number = scanner.getUserInput(String.format("Give me a base-%d number", a), base7Number);
+            //What is A:
+            a = scanner.getUserInput("What is A:", a);
 
-                if (!isBaseNumberValid(a, base7Number))
-                    scanner.print("You did not enter a base-7 number. Starting over.");
+            // What is B:
+            b = scanner.getUserInput("What is B:", b);
 
-            } while (!isBaseNumberValid(a, base7Number));
+            // Give me a base-7 number:
+            base7Number = scanner.getUserInput(String.format("Give me a base-%d number", a), base7Number);
+
+            // (If it is not a base-7 #, start all over.)
+            if (!isBaseNumberValidUsingASCII(a, base7Number)) {
+                scanner.print("You did not enter a base-7 number. Exiting.");
+                System.exit(1);
+            }
 
             var baseA = new BaseValue(a, base7Number);
 
+            // The number in b-10 is: XYZ
             scanner.print(String.format("The number in b-10 is: %s", BaseValue.toBase10(baseA).get_value()));
+
+            // The number in b-5 is: 1234.43.
             scanner.print(String.format("The number in b-%d is: %s", b, BaseValue.convertToBase(baseA, b).get_value()));
 
         } catch (Exception ex) {
@@ -79,6 +88,55 @@ public class Hw2_Campos {
             return Pattern.matches("^[a0-9\\.]+$", number);
         else
             return Pattern.matches(String.format("^[a-%s0-9\\.]+$", BaseValue.LetterValues.getValue(base.doubleValue() - 1)), number);
+    }
+
+    public static boolean isBaseNumberValidUsingASCII(Integer base, String number) {
+        // return false if number is empty/null
+        if ((number == null) || (number.equals("")))
+            return false;
+
+        number = number.toLowerCase();
+
+        // Convert the string to a char array
+        var charArray = number.toCharArray();
+
+        for (var x = 0; x < charArray.length; x++) {
+            var value = (int) charArray[x];
+        }
+
+        if ((base < 2) || (base > 16))
+            return false;
+        else if (base < 11) {
+            // values 0-9 => ASCII 46 (period), 48-57
+            for (var x = 0; x < charArray.length; x++) {
+                var value = (int) charArray[x];
+
+                if ((value < 46) || (value > 57))
+                    return false;
+                if ((value == 47))
+                    return false;
+                else
+                    continue;
+            }
+
+            return true;
+        } else {
+            // values 0-9 & a-f => ASCII 46(period), 48-57, 97-102(a-f)
+            for (var x = 0; x < charArray.length; x++) {
+                var value = (int) charArray[x];
+
+                if ((value < 46) || (value > 102))
+                    return false;
+                if ((value == 47))
+                    return false;
+                if ((value > 57) && (value < 97))
+                    return false;
+                else
+                    continue;
+            }
+
+            return true;
+        }
     }
 
     public static void testFullImplementation() {
