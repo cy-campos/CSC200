@@ -24,7 +24,7 @@ public class MyScanner implements AutoCloseable {
     public String getUserInputAsString(String question) {
         try {
             print(question);
-            String _out = _scanner.next();
+            String _out = _scanner.nextLine();
             return _out;
         } catch (Exception exception) {
             System.out.println(String.format("Error: Input Invalid | Please re-enter value\nMessage: %s\n", exception.toString()));
