@@ -64,6 +64,9 @@ public class Hw3_Campos {
 
                 String strShouldContinue = _scanner.getUserInputAsString("\ncontinue?");
 
+                // requirements to continue running loop are not too clear : if user does not enter 'yes' or 'no'
+                // explicitly, then what? Will assume that 'yes' is clear intent to continue and all other values are
+                // 'no'
                 shouldContinue = strShouldContinue.matches("yes");
             }
         } while (shouldContinue);
@@ -113,7 +116,7 @@ class HW3Data{
         if (isValid4BitNumber(value))
             _decimalA = value;
         else
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(String.format("Illegal input: %s", value));
     }
     public String get_decimalA_asBinary() {
         return _toBinary(_decimalA);
@@ -127,7 +130,7 @@ class HW3Data{
         if (isValid4BitNumber(value))
             _decimalB = value;
         else
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(String.format("Illegal input: %s", value));
     }
     public String get_decimalB_asBinary() {
         return _toBinary(_decimalB);
@@ -205,11 +208,9 @@ class HW3Data{
         // part of the binaryValues to add?
         if (setFlowVariables) {
             flowIn = "";
-            flowOut = "";
 
             for (int i = 1; i < charArray1.length; i++) {
                 flowIn += charArray1[i];
-                flowOut += charArray2[i];
             }
         }
 
@@ -228,8 +229,11 @@ class HW3Data{
             overflow = sum >= 1 ? sum - 1 : sum;
         }
 
-        if (overflow > 1)
-            throw new IllegalArgumentException();
+        if (setFlowVariables) {
+            flowOut = "";
+            for (int i = 1; i < _out.length(); i++)
+                flowOut += _out.charAt(i);
+        }
 
         return _out;
     }
@@ -250,6 +254,6 @@ class HW3Data{
     public void calculate() {
         var binaryA = get_decimalA_asBinary();
         var binaryB = get_decimalB_asBinary();
-        _set_sum(addBinaryNumbers(binaryA, binaryB));
+        _set_sum(addBinaryNumbers(binaryA, binaryB, true));
     }
 }

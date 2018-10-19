@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="991a625b-7f8b-4890-b66d-fafb79ba0fcf" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CSC200/MyScanner.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSC200/MyScanner.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MyScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MyScanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hw3_Campos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hw3_Campos.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,12 +36,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="29925" />
+          <entry key="java" value="30334" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="29925" />
+          <entry key="JAVA" value="30334" />
         </counts>
       </usages-collector>
     </session>
@@ -83,8 +81,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Hw3_Campos.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="546">
-              <caret line="96" column="76" selection-start-line="96" selection-start-column="76" selection-end-line="96" selection-end-column="76" />
+            <state relative-caret-position="302">
+              <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
               <folding>
                 <element signature="e#0#2543#0" expanded="true" />
                 <element signature="e#1774#1775#0" expanded="true" />
@@ -170,6 +168,12 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Hw2_Campos.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
+            <path>
+              <item name="CSC200" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CSC200" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Hw3_Campos.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -179,7 +183,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539916819796" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539918145258" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -358,19 +362,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Hw3_Campos.java</url>
-          <line>156</line>
+          <line>159</line>
           <properties />
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Hw3_Campos.java</url>
-          <line>152</line>
+          <line>155</line>
           <properties />
           <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Hw3_Campos.java</url>
-          <line>250</line>
+          <line>254</line>
           <properties />
           <option name="timeStamp" value="51" />
         </line-breakpoint>
@@ -437,8 +441,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Hw3_Campos.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="96" column="76" selection-start-line="96" selection-start-column="76" selection-end-line="96" selection-end-column="76" />
+        <state relative-caret-position="302">
+          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
           <folding>
             <element signature="e#0#2543#0" expanded="true" />
             <element signature="e#1774#1775#0" expanded="true" />
