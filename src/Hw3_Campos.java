@@ -76,6 +76,8 @@ public class Hw3_Campos {
         var out = new HW3Data();
 
         try (var _scanner = new MyScanner()) {
+            _scanner.print("under 2's comp 4-bit repr;  adding two #s");
+
             //  ">> wrong; exiting" - per requirements, validation must occur immediately after input
             var decimalAInput = _scanner.getUserInputAsInteger("Give me a decimal # A:");
             out.set_decimalA(decimalAInput);
