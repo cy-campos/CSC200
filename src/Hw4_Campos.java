@@ -9,10 +9,11 @@
 
     Instructions:
 
-        HW # 4
-        Posted on: Saturday, November 3, 2018 8:04:50 AM EDT
-
         Due: 8am 11/17/2018
+
+        Requirements:
+
+        1) must use one-dimension array (section 7.1)
 
         PRELIMINARY SPECIFICATION:
 
